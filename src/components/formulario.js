@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axiosconfig'; // Importe o axios para fazer requisições HTTP
+import api from './api/axiosconfig'; // Importe o axios para fazer requisições HTTP
 
 const formulario = () => {
   const [name, setName] = useState('');
@@ -11,7 +11,7 @@ const formulario = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get('/medicos');
+        const response = await api.get('/medicos');
         setDoctors(response.data);
       } catch (error) {
         console.error('Erro ao buscar médicos:', error);
@@ -24,7 +24,7 @@ const formulario = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/consultas', {
+      const response = await api.post('/consultas', {
         NomeP: name,
         TelefonePac: phone,
         NomeE: specialty,
@@ -45,23 +45,41 @@ const formulario = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label>Nome:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
       <div>
         <label>Telefone:</label>
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+        <input
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
       </div>
       <div>
         <label>Especialidade:</label>
-        <input type="text" value={specialty} onChange={(e) => setSpecialty(e.target.value)} required />
+        <input
+          type="text"
+          value={specialty}
+          onChange={(e) => setSpecialty(e.target.value)}
+          required
+        />
       </div>
       <div>
         <label>Médico Preferencial:</label>
-        <select value={preferredDoctor} onChange={(e) => setPreferredDoctor(e.target.value)}>
+        <select
+          value={preferredDoctor}
+          onChange={(e) => setPreferredDoctor(e.target.value)}
+        >
           <option value="">Selecione um médico</option>
           {doctors.map((doctor) => (
-            <option key={doctor.Crm} value={doctor.NomeM}>
-              {doctor.NomeM}
+            <option key={doctor.crm} value={doctor.nomeM}>
+              {doctor.nomeM}
             </option>
           ))}
         </select>

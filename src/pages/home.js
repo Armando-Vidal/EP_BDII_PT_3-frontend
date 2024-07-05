@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MedicosList from './components/MedicosList';
 import { Link } from 'react-router-dom';
-import axios from 'axiosconfig'; // Importe o axios para fazer requisições HTTP
+import api from './api/axiosconfig'; // Importe o axios para fazer requisições HTTP
 
 const Home = () => {
   const [consultations, setConsultations] = useState([]);
@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchConsultations = async () => {
       try {
-        const response = await axios.get('/consultas');
+        const response = await api.get('/consultas');
         setConsultations(response.data);
       } catch (error) {
         console.error('Erro ao buscar consultas:', error);

@@ -4,6 +4,8 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Formulario from './formulario';
 import Home from './pages/home';
+import MarcarConsulta from './pages/marcarConsulta';
+import gerenciarConsultas from './pages/gerenciarConsultas';
 import './styles/App.css';
 
 const App = () => {
@@ -13,7 +15,8 @@ const App = () => {
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/marcar-consulta" component={Formulario} />
+          <Route path="/marcar-consulta" component={MarcarConsulta} />
+          <Route path="/gerenciar-consultas" component={gerenciarConsultas} />
         </Switch>
         <Footer />
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/axiosConfig';
+import api from './api/axiosconfig'; // Importe o axios para fazer requisições HTTP
 
 const MedicosList = () => {
     const [medicos, setMedicos] = useState([]);
