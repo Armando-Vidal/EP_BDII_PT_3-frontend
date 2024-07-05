@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axiosconfig'; // Importe o axios para fazer requisições HTTP
 
 const formulario = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [specialty, setSpecialty] = useState('');
   const [preferredDoctor, setPreferredDoctor] = useState('');
+  const [doctors, setDoctors] = useState([]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get('/medicos');
+        setDoctors(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar médicos:', error);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica para submeter os dados do formulário
+    try {
+      const response = await axios.post('/consultas', {
+        NomeP: name,
+        TelefonePac: phone,
+        NomeE: specialty,
+        NomeM: preferredDoctor,
+      });
+      console.log('Consulta marcada com sucesso:', response.data);
+      // Limpar os campos após submissão
+      setName('');
+      setPhone('');
+      setSpecialty('');
+      setPreferredDoctor('');
+    } catch (error) {
+      console.error('Erro ao marcar consulta:', error);
+    }
   };
 
   return (
@@ -27,7 +57,14 @@ const formulario = () => {
       </div>
       <div>
         <label>Médico Preferencial:</label>
-        <input type="text" value={preferredDoctor} onChange={(e) => setPreferredDoctor(e.target.value)} />
+        <select value={preferredDoctor} onChange={(e) => setPreferredDoctor(e.target.value)}>
+          <option value="">Selecione um médico</option>
+          {doctors.map((doctor) => (
+            <option key={doctor.Crm} value={doctor.NomeM}>
+              {doctor.NomeM}
+            </option>
+          ))}
+        </select>
       </div>
       <button type="submit">Marcar Consulta</button>
     </form>
