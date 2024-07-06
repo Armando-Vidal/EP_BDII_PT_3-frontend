@@ -4,7 +4,7 @@ const pool = new Pool({
     host: 'localhost',
     user: 'postgres',
     password: 'admin',
-    database: 'sistema_climed',
+    database: 'climed01',
     port: 5432, // default PostgreSQL port
 });
 
